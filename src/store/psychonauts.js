@@ -19,6 +19,7 @@ const slice = createSlice({
     },
 
     psychonautsRequestFailed: (psychonauts, action) => {
+      psychonauts.list = [];
       psychonauts.loading = false;
     },
   },
@@ -33,7 +34,17 @@ export const loadPsychonauts = limit => dispatch => {
   return dispatch(
     apiCallBegan({
       url: `characters?limit=${limit}`,
-      data: [],
+      onStart: psychonautsRequested.type,
+      onSuccess: psychonautsReceived.type,
+      onError: psychonautsRequestFailed.type,
+    })
+  );
+};
+
+export const searchPsychonaut = keyword => dispatch => {
+  return dispatch(
+    apiCallBegan({
+      url: `characters?name=${keyword}`,
       onStart: psychonautsRequested.type,
       onSuccess: psychonautsReceived.type,
       onError: psychonautsRequestFailed.type,

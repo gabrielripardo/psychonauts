@@ -1,11 +1,12 @@
+import { Link } from "react-router-dom";
+import { Psychonaut } from "../../models/psychonaut.model";
+import { PsyPowers } from "../../models/psyPowers.model";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Psychonaut } from "../../models/psychonaut.model";
-import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 
 const style = {
@@ -18,6 +19,8 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  height: "80vh",
+  overflow: "scroll",
 };
 
 const useStyles = makeStyles({
@@ -33,13 +36,28 @@ const useStyles = makeStyles({
     borderRadius: 100,
     border: "solid #eee 5px",
   },
+  boxContent: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 500,
+    backgroundColor: "#fff",
+    border: "2px solid #000",
+    padding: "14px 6px",
+    height: "80vh",
+    overflow: "scroll",
+  },
+  boxPower: {
+    display: "flex",
+    alignItems: "center",
+  },
 });
 
 export default function DetailsModal(props: any) {
   const { data, open, handleClose } = props;
   console.log(data);
   const classes = useStyles(props);
-  const baseUrl = window.location.protocol + window.location.host + "/";
 
   return (
     <div>
@@ -55,7 +73,7 @@ export default function DetailsModal(props: any) {
         }}
       >
         <Fade in={open}>
-          <Box sx={style}>
+          <Box className={classes.boxContent}>
             <Typography
               id="transition-modal-description"
               component={"span"}
@@ -67,47 +85,32 @@ export default function DetailsModal(props: any) {
                   variant="h6"
                   component="h2"
                 >
-                  Patient Details
+                  Powers
                 </Typography>
-                <img className={classes.image} src={data.picture.medium}></img>
               </Box>
-              <p>
-                <strong>Name: </strong>
-                <span>{`${data.name.title} ${data.name.first} ${data.name.last}`}</span>
-              </p>
-              <p>
-                <strong>Email: </strong>
-                <span>{data.email}</span>{" "}
-              </p>
-              <p>
-                <strong>Gender: </strong>
-                <span>{data.gender}</span>
-              </p>
-              <p>
-                <strong>Birth date: </strong>
-                <span>{data.dob.date}</span>
-              </p>
-              <p>
-                <strong>Tellphone:</strong> <span>{data.phone}</span>{" "}
-              </p>
-              <p>
-                <strong>Nationality: </strong>
-                <span>{data.location.country}</span>{" "}
-              </p>
-              <p>
-                <strong>Address: </strong>
-                <span>{`${data.location.state} - ${data.location.city} - ${data.location.street.name} - ${data.location.street.number}`}</span>{" "}
-              </p>
-              <p>
-                <strong>ID: </strong>
-                <span>{data.login.uuid}</span>
-              </p>
-              <p>
-                <strong>Share URL: </strong>
-                <Link
-                  to={`details/${data.login.uuid}`}
-                >{`${baseUrl}details/${data.login.uuid}`}</Link>{" "}
-              </p>
+              {data.length > 0 ? (
+                data.map((power: PsyPowers) => (
+                  <Box key={power._id} className={classes.boxPower}>
+                    <img className={classes.image} src={power.img}></img>
+                    <Box>
+                      <p>
+                        <strong>Name: </strong>
+                        {power.name}
+                      </p>
+                      <p>
+                        <strong>Description: </strong>
+                        <span>{power.description}</span>
+                      </p>
+                    </Box>
+                  </Box>
+                ))
+              ) : (
+                <Box component="div" className={classes.root}>
+                  <Typography id="transition-modal-title" component="h3">
+                    Esse Psyconauta não possui poderes.
+                  </Typography>
+                </Box>
+              )}
             </Typography>
           </Box>
         </Fade>

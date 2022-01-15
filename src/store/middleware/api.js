@@ -7,7 +7,7 @@ const api =
   async action => {
     if (action.type !== actions.apiCallBegan.type) return next(action);
 
-    const { url, method, data, onStart, onSuccess, onError } = action.payload;
+    const { url, method, onStart, onSuccess, onError } = action.payload;
 
     if (onStart) dispatch({ type: onStart });
 
@@ -18,18 +18,21 @@ const api =
         baseURL: "https://psychonauts-api.herokuapp.com/api/",
         url,
         method,
-        data,
       });
 
+      const list = response.data.length > 0 ? response.data : [response.data];
+
       // General
-      dispatch(actions.apiCallSucess(response.data));
+      dispatch(actions.apiCallSucess(list));
       console.log(`## Response data`);
       console.log(response.data);
+      console.log(typeof list);
+      console.log(response.data.length);
       // Specific
       if (onSuccess)
         dispatch({
           type: onSuccess,
-          payload: [...data, ...response.data],
+          payload: list,
         });
     } catch (error) {
       // General

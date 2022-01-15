@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 import SimpleTable from "../components/SimpleTable";
 import { Psychonaut } from "../models/psychonaut.model";
 import { psychonautExample } from "../components/Favorites/mock";
-import { getAll } from "../components/Favorites/StorageFarorite";
+import { getAll, removeStorage } from "../components/Favorites/StorageFarorite";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -29,7 +29,7 @@ export default function Favorites() {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [openMessage, setopenMessage] = React.useState(false);
-  const [idPsy, setIdPsy] = useState();
+  const [idPsy, setIdPsy] = useState("0");
 
   const handleClickMessage = () => {
     setopenMessage(true);
@@ -54,30 +54,31 @@ export default function Favorites() {
     setOpen(false);
   };
 
-  const removePsychonaut = (id: number) => {
+  const removePsychonaut = (id: string) => {
     handleClickOpen();
-    console.log("# id" + id);
+    setIdPsy(id);
+    console.log("# id - " + id);
   };
 
   const confirmRemove = () => {
     handleClose();
-    handleClickMessage();
+    if (removeStorage(idPsy)) {
+      // setPsychonauts(getAll());
+      handleClickMessage();
+    }
   };
 
   useEffect(() => {
     setPsychonauts(getAll());
     console.log("#list from local storage");
     console.log(getAll());
-  }, []);
+  }, [openMessage]);
 
   // setPsychonauts([psychonaut]);
   return (
     <Container>
       <h1>Meus Favoritos</h1>
       <SimpleTable rows={psychonauts} removePsy={removePsychonaut} />
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open responsive dialog
-      </Button>
       <Dialog
         fullScreen={fullScreen}
         open={open}

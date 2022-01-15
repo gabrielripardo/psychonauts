@@ -1,6 +1,14 @@
 import { Psychonaut } from "../../models/psychonaut.model";
 
-export function removePsychonaut() {}
+export function removeStorage(keyName: string) {
+  try {
+    localStorage.removeItem(keyName);
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+  return true;
+}
 
 export function getAll() {
   let list: Psychonaut[] = [];

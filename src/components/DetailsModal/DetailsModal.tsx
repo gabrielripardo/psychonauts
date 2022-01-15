@@ -88,21 +88,29 @@ export default function DetailsModal(props: any) {
                   Powers
                 </Typography>
               </Box>
-              {data.map((power: PsyPowers) => (
-                <Box className={classes.boxPower}>
-                  <img className={classes.image} src={power.img}></img>
-                  <Box>
-                    <p>
-                      <strong>Name: </strong>
-                      {power.name}
-                    </p>
-                    <p>
-                      <strong>Description: </strong>
-                      <span>{power.description}</span>
-                    </p>
+              {data.length > 0 ? (
+                data.map((power: PsyPowers) => (
+                  <Box key={power._id} className={classes.boxPower}>
+                    <img className={classes.image} src={power.img}></img>
+                    <Box>
+                      <p>
+                        <strong>Name: </strong>
+                        {power.name}
+                      </p>
+                      <p>
+                        <strong>Description: </strong>
+                        <span>{power.description}</span>
+                      </p>
+                    </Box>
                   </Box>
+                ))
+              ) : (
+                <Box component="div" className={classes.root}>
+                  <Typography id="transition-modal-title" component="h3">
+                    Esse Psyconauta não possui poderes.
+                  </Typography>
                 </Box>
-              ))}
+              )}
             </Typography>
           </Box>
         </Fade>

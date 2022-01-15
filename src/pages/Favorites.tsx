@@ -3,21 +3,17 @@ import { Container } from "@mui/material";
 import SimpleTable from "../components/SimpleTable";
 import { Psychonaut } from "../models/psychonaut.model";
 import { psychonautExample } from "../components/Favorites/mock";
-
-function getStorage() {
-  let item = localStorage.getItem("psychonaut");
-  console.log("#Storage");
-
-  if (item) {
-    console.log(JSON.parse(item));
-  }
-}
+import { getAll } from "../components/Favorites/StorageFarorite";
 
 export default function Favorites() {
-  const [psychonauts, setPsychonauts] = useState<Psychonaut[]>([
-    psychonautExample,
-  ]);
-  getStorage();
+  const [psychonauts, setPsychonauts] = useState<any[]>([]);
+
+  useEffect(() => {
+    setPsychonauts(getAll());
+    console.log("#list from local storage");
+    console.log(getAll());
+  }, []);
+
   // setPsychonauts([psychonaut]);
   return (
     <Container>

@@ -1,13 +1,25 @@
 import { Psychonaut } from "../../models/psychonaut.model";
 
 export function getAll() {
-  let list = [];
-  let id = 0;
-  while (localStorage.getItem("id-" + id) != null) {
-    list.push(localStorage.getItem("id-" + id));
-    id++;
+  let list: Psychonaut[] = [];
+  let id = getLength() - 1;
+
+  while (id >= 0) {
+    let item: Psychonaut = JSON.parse(localStorage.getItem("id-" + id) || "{}");
+    list.push(item);
+    id--;
   }
   return list;
+}
+
+export function getLength() {
+  let id = 0;
+
+  while (localStorage.getItem("id-" + id) != null) {
+    id++;
+  }
+
+  return id;
 }
 
 export function getNextId() {

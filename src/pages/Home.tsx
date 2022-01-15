@@ -30,6 +30,7 @@ export default function Home() {
 
   const changeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(searchPsychonaut(event.target.value));
+    setLimit(5);
     setSearch(event.target.value);
   };
 
@@ -60,6 +61,7 @@ export default function Home() {
   function loadMore() {
     let newLimit = limit + 5;
     setLimit(newLimit + 5);
+    setSearch("");
     dispatch(loadPsychonauts(newLimit));
   }
 
@@ -71,7 +73,7 @@ export default function Home() {
   }, [dispatch, search]);
 
   return (
-    <Container>
+    <Container sx={{ pb: 5 }}>
       <h1>Lista de Psiconautas</h1>
       <Box
         sx={{

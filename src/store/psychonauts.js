@@ -15,8 +15,6 @@ const slice = createSlice({
 
     psychonautsReceived: (psychonauts, action) => {
       psychonauts.list = action.payload;
-      console.log("reducer");
-      console.log(psychonauts.list);
       psychonauts.loading = false;
     },
 

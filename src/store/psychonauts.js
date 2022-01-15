@@ -29,10 +29,10 @@ export default slice.reducer;
 const { psychonautsRequested, psychonautsReceived, psychonautsRequestFailed } =
   slice.actions;
 
-export const loadPsychonauts = () => dispatch => {
+export const loadPsychonauts = limit => dispatch => {
   return dispatch(
     apiCallBegan({
-      url: `characters?limit=5`,
+      url: `characters?limit=${limit}`,
       data: [],
       onStart: psychonautsRequested.type,
       onSuccess: psychonautsReceived.type,

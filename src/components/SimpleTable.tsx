@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import DetailsModal from "./DetailsModal/DetailsModal";
 import { Psychonaut } from "../models/psychonaut.model";
 import { PsyPowers } from "../models/psyPowers.model";
+import ButtonFavorite from "../components/Favorites/ButtonFavorite";
 
 export default function SimpleTable(props: any) {
   const [open, setOpen] = useState(false);
@@ -65,6 +66,9 @@ export default function SimpleTable(props: any) {
                   >
                     Powers
                   </Button>
+                </TableCell>
+                <TableCell align="right">
+                  <ButtonFavorite selectPsy={props.selectPsy} row={row} />
                 </TableCell>
               </TableRow>
             ))}

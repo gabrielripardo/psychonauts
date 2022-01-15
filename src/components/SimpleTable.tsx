@@ -67,8 +67,11 @@ export default function SimpleTable(props: any) {
                   >
                     Powers
                   </Button>
-                  <ButtonFavorite selectPsy={props.selectPsy} row={row} />
-                  <ButtonRemove removePsy={props.removePsy} id={row._id} />
+                  {props.removePsy != null ? (
+                    <ButtonRemove removePsy={props.removePsy} id={row._id} />
+                  ) : (
+                    <ButtonFavorite selectPsy={props.selectPsy} row={row} />
+                  )}
                 </TableCell>
               </TableRow>
             ))}

@@ -45,7 +45,7 @@ export default function Home() {
     console.log(psychonaut);
     if (psychonaut != null) {
       if (savePsychonaut(psychonaut)) {
-        setopenMessage(true);
+        handleClick();
       }
     }
   }

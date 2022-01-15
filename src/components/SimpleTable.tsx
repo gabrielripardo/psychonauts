@@ -11,6 +11,7 @@ import DetailsModal from "./DetailsModal/DetailsModal";
 import { Psychonaut } from "../models/psychonaut.model";
 import { PsyPowers } from "../models/psyPowers.model";
 import ButtonFavorite from "../components/Favorites/ButtonFavorite";
+import ButtonRemove from "../components/Favorites/ButtonRemove";
 
 export default function SimpleTable(props: any) {
   const [open, setOpen] = useState(false);
@@ -36,7 +37,7 @@ export default function SimpleTable(props: any) {
               <TableCell>Avatar</TableCell>
               <TableCell align="right">Name</TableCell>
               <TableCell align="right">Gender</TableCell>
-              <TableCell align="right">Powers</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -66,9 +67,8 @@ export default function SimpleTable(props: any) {
                   >
                     Powers
                   </Button>
-                </TableCell>
-                <TableCell align="right">
                   <ButtonFavorite selectPsy={props.selectPsy} row={row} />
+                  <ButtonRemove removePsy={props.removePsy} id={row._id} />
                 </TableCell>
               </TableRow>
             ))}

@@ -9,14 +9,15 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DetailsModal from "./DetailsModal/DetailsModal";
 import { Psychonaut } from "../models/psychonaut.model";
+import { PsyPowers } from "../models/psyPowers.model";
 
 export default function SimpleTable(props: any) {
   const [open, setOpen] = useState(false);
-  const [row, setRow] = useState<Psychonaut[]>([]);
+  const [powers, setPowers] = useState<PsyPowers[]>([]);
 
-  const handleOpen = (row: Psychonaut[]) => {
+  const handleOpen = (powers: PsyPowers[]) => {
     setOpen(true);
-    setRow(row);
+    setPowers(powers);
   };
 
   const handleClose = () => setOpen(false);
@@ -24,7 +25,7 @@ export default function SimpleTable(props: any) {
   return (
     <>
       {open && (
-        <DetailsModal open={open} handleClose={handleClose} data={row} />
+        <DetailsModal open={open} handleClose={handleClose} data={powers} />
       )}
 
       <TableContainer component={Paper} data-testid="table_container">
@@ -33,7 +34,7 @@ export default function SimpleTable(props: any) {
             <TableRow>
               <TableCell>Avatar</TableCell>
               <TableCell align="right">Name</TableCell>
-              <TableCell align="right">gender</TableCell>
+              <TableCell align="right">Gender</TableCell>
               <TableCell align="right">Powers</TableCell>
             </TableRow>
           </TableHead>
@@ -59,7 +60,7 @@ export default function SimpleTable(props: any) {
                   <Button
                     variant="contained"
                     size="small"
-                    onClick={() => handleOpen(row)}
+                    onClick={() => handleOpen(row.psiPowers)}
                     data-testid="button_view"
                   >
                     Powers

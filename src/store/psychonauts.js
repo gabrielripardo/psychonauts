@@ -21,6 +21,7 @@ const slice = createSlice({
     },
 
     psychonautsRequestFailed: (psychonauts, action) => {
+      psychonauts.list = [];
       psychonauts.loading = false;
     },
   },

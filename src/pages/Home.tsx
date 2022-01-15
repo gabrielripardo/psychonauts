@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { loadPsychonauts } from "../store/psychonauts";
+import { loadPsychonauts, searchPsychonaut } from "../store/psychonauts";
 import { Psychonaut } from "../models/psychonaut.model";
 import SimpleTable from "../components/SimpleTable";
 import { Container } from "@mui/material";
@@ -11,6 +11,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import ButtonFavorite from "../components/Favorites/ButtonFavorite";
 import { savePsychonaut } from "../components/Favorites/StorageFarorite";
+import TextField from "@mui/material/TextField";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -25,6 +26,12 @@ export default function Home() {
   const loading = useSelector((state: RootStateOrAny) => state.loading);
   const [limit, setLimit] = useState(5);
   const [openMessage, setopenMessage] = React.useState(false);
+  const [search, setSearch] = useState("");
+
+  const changeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(searchPsychonaut(event.target.value));
+    setSearch(event.target.value);
+  };
 
   const handleClick = () => {
     setopenMessage(true);
@@ -57,14 +64,30 @@ export default function Home() {
   }
 
   useEffect(() => {
-    dispatch(loadPsychonauts(limit));
-    console.log(loading);
-    console.log(psychonauts);
-  }, [dispatch]);
+    if (search == "") {
+      dispatch(loadPsychonauts(limit));
+    }
+    console.log(search);
+  }, [dispatch, search]);
 
   return (
     <Container>
       <h1>Lista de Psiconautas</h1>
+      <Box
+        sx={{
+          maxWidth: "100%",
+          mb: 4,
+        }}
+      >
+        <TextField
+          id="filled-basic"
+          label="Search..."
+          variant="filled"
+          fullWidth
+          value={search}
+          onChange={changeSearch}
+        />
+      </Box>
       <SimpleTable
         rows={psychonauts}
         selectPsy={selectPyschonaut}

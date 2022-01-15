@@ -17,6 +17,9 @@ export default function SimpleTable(props: any) {
   const [open, setOpen] = useState(false);
   const [powers, setPowers] = useState<PsyPowers[]>([]);
 
+  console.log("# Characters ");
+  console.log(props.rows);
+
   const handleOpen = (powers: PsyPowers[]) => {
     setOpen(true);
     setPowers(powers);

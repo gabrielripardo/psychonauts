@@ -15,6 +15,8 @@ const slice = createSlice({
 
     psychonautsReceived: (psychonauts, action) => {
       psychonauts.list = action.payload;
+      console.log("reducer");
+      console.log(psychonauts.list);
       psychonauts.loading = false;
     },
 
@@ -33,7 +35,17 @@ export const loadPsychonauts = limit => dispatch => {
   return dispatch(
     apiCallBegan({
       url: `characters?limit=${limit}`,
-      data: [],
+      onStart: psychonautsRequested.type,
+      onSuccess: psychonautsReceived.type,
+      onError: psychonautsRequestFailed.type,
+    })
+  );
+};
+
+export const searchPsychonaut = keyword => dispatch => {
+  return dispatch(
+    apiCallBegan({
+      url: `characters?name=${keyword}`,
       onStart: psychonautsRequested.type,
       onSuccess: psychonautsReceived.type,
       onError: psychonautsRequestFailed.type,

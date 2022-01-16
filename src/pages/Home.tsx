@@ -70,7 +70,7 @@ export default function Home() {
       dispatch(loadPsychonauts(limit));
     }
     console.log(search);
-  }, [dispatch, search]);
+  }, [dispatch, limit]);
 
   return (
     <Container sx={{ pb: 5 }}>
